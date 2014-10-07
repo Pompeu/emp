@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="463.0" prefWidth="436.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="emp.controller.FXMLClienteTelefoneController">
+    <stylesheets>
+        <URL value="@fxmlcliente.css" />
+    </stylesheets>
+   <children>
+      <TableView fx:id="tbTelefone" layoutX="25.0" layoutY="292.0" prefHeight="117.0" prefWidth="385.0" tableMenuButtonVisible="true">
+        <columns>
+          <TableColumn fx:id="clDDD" prefWidth="75.0" text="DDD" />
+          <TableColumn fx:id="clNumero" prefWidth="187.0" text="NUMERO" />
+            <TableColumn fx:id="clOperadora" prefWidth="111.0" text="OPERADORA" />
+        </columns>
+      </TableView>
+      <TextField fx:id="tfDdd" layoutX="105.0" layoutY="154.0" prefHeight="25.0" prefWidth="41.0" />
+      <TextField fx:id="tfTelefone" layoutX="236.0" layoutY="155.0" prefHeight="25.0" prefWidth="116.0" />
+      <TextField fx:id="tfOperadora" layoutX="105.0" layoutY="190.0" />
+      <Label layoutX="61.0" layoutY="157.0" text="DDD" />
+      <Label layoutX="158.0" layoutY="158.0" text="TELEFONE" />
+      <Label layoutX="12.0" layoutY="196.0" text="OPERADORA" />
+      <Button fx:id="btnDeletar" layoutX="25.0" layoutY="229.0" mnemonicParsing="false" text="DELETAR" />
+      <Button fx:id="btnAlterar" layoutX="114.0" layoutY="227.0" mnemonicParsing="false" text="ALTERAR" />
+      <Button fx:id="btnAdcionar" layoutX="204.0" layoutY="229.0" mnemonicParsing="false" text="ADICIONAR" />
+      <Button fx:id="btnGravar" layoutX="337.0" layoutY="422.0" mnemonicParsing="false" text="GRAVAR" />
+      <TextField fx:id="tfDependente" layoutX="202.0" layoutY="119.0" minHeight="16" minWidth="69" prefHeight="25.0" prefWidth="69.0" />
+      <Label fx:id="lbDependente" layoutX="1.0" layoutY="120.0" minHeight="16" minWidth="69" text="DEPENDENTES" />
+      <TextField fx:id="tfLimite" layoutX="107.0" layoutY="119.0" minHeight="16" minWidth="31.0" prefHeight="25.0" prefWidth="31.0" />
+      <Label fx:id="lbLimite" layoutX="148.0" layoutY="125.0" minHeight="16" minWidth="69" text="LIMITE" />
+      <TextField fx:id="tfDataNascimetno" layoutX="107.0" layoutY="84.0" minHeight="16" minWidth="69" />
+      <Label fx:id="lbDataNascimetno" layoutX="15.0" layoutY="80.0" minHeight="16" minWidth="69" prefHeight="25.0" prefWidth="76.0" text="DATA NASC" />
+      <TextField fx:id="tfCpf" layoutX="107.0" layoutY="50.0" minHeight="16" minWidth="69" />
+      <Label fx:id="lbCpf" layoutX="55.0" layoutY="54.0" minHeight="16" minWidth="41.0" prefHeight="16.0" prefWidth="41.0" text="CPF" />
+      <TextField fx:id="tfNome" layoutX="107.0" layoutY="16.0" minHeight="16" minWidth="69" />
+      <Label fx:id="lbNome" layoutX="55.0" layoutY="20.0" minHeight="16" minWidth="41.0" prefHeight="16.0" prefWidth="41.0" text="NOME" />
+      <Label layoutX="25.0" layoutY="269.0" text="LISTA DE TELEFONES" />
+      <Label fx:id="iMenssagem" layoutX="184.0" layoutY="267.0" prefHeight="15.0" prefWidth="0.0" textFill="#e80909" />
+   </children>
+</AnchorPane>
