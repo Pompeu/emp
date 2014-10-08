@@ -28,7 +28,7 @@ public class TableViewModel {
     public TableViewModel(String ddd, String telefone, String operadora) {
         this.ddd = new SimpleStringProperty(ddd);
         this.telefone = new SimpleStringProperty(telefone);
-        this.operadora = new SimpleStringProperty(operadora);
+        this.operadora = new SimpleStringProperty(operadora.toUpperCase());
     }
 
     public StringProperty dddProperty() {

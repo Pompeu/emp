@@ -24,7 +24,7 @@ public class ConnectionFactoryJPA {
     private ConnectionFactoryJPA() {
 
     }
-
+    
     public static ConnectionFactoryJPA getinstance() {
         if (INSTANCE == null) {
             INSTANCE = new ConnectionFactoryJPA();

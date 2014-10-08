@@ -7,20 +7,15 @@ package emp.controller;
 
 import emp.model.Cliente;
 import emp.model.ClienteTelefone;
-import emp.model.DAO.ClienteDao;
-import emp.model.DAO.ICRUD;
 import emp.model.JPAutil.ConnectionFactoryJPA;
 import emp.model.TableViewModel;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -29,14 +24,12 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
-import javax.persistence.EntityTransaction;
 
 /**
  *
  * @author pompeu
  */
-public class FXMLClienteTelefoneController implements Initializable {
+public class FXMLClienteTelefoneControllerj8 implements Initializable {
 
     @FXML
     private TableView<TableViewModel> tbTelefone;
@@ -98,35 +91,28 @@ public class FXMLClienteTelefoneController implements Initializable {
 
         tbTelefone.setItems(dados);
 
-        btnAdcionar.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent e) {
-                if (unicoTelefone(tfDdd.getText(), tfTelefone.getText(), tfOperadora.getText())) {
-                    if (tfDdd.getText().isEmpty() || tfTelefone.getText().isEmpty()
-                            || tfOperadora.getText().isEmpty()) {
-                        iMenssagem.setText("Any Empty Iten!!");
-                    } else {
-                        dados.add(new TableViewModel(tfDdd.getText(),
-                                tfTelefone.getText(),
-                                tfOperadora.getText()));
-                        limparcampos(true);
-                    }
-
+        btnAdcionar.setOnAction(e -> {
+            if (unicoTelefone(tfDdd.getText(), tfTelefone.getText(), tfOperadora.getText())) {
+                if (tfDdd.getText().isEmpty() || tfTelefone.getText().isEmpty()
+                        || tfOperadora.getText().isEmpty()) {
+                    iMenssagem.setText("Any Empty Iten!!");
+                } else {
+                    dados.add(new TableViewModel(tfDdd.getText(),
+                            tfTelefone.getText(),
+                            tfOperadora.getText()));
+                    limparcampos(true);
                 }
+
             }
+
         });
 
-        btnDeletar.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent e) {
-                if (tbTelefone.getSelectionModel().getFocusedIndex() > -1) {
-                    dados.remove(tbTelefone.getSelectionModel()
-                            .getSelectedItem());
-                } else {
-                    iMenssagem.setText("Selecione Algum Item");
-                }
+        btnDeletar.setOnAction(e -> {
+            if (tbTelefone.getSelectionModel().getFocusedIndex() > -1) {
+                dados.remove(tbTelefone.getSelectionModel()
+                        .getSelectedItem());
+            } else {
+                iMenssagem.setText("Selecione Algum Item");
             }
         });
 
@@ -139,50 +125,40 @@ public class FXMLClienteTelefoneController implements Initializable {
                     .getSelectedItem().operadoraProperty().get());
         });
 
-        btnAlterar.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent e) {
-                iMenssagem.setText("");
-                int getindex = tbTelefone.getSelectionModel().getFocusedIndex();
-                if (getindex == -1) {
-                    iMenssagem.setText("Selecione um linha");
-                } else {
-                    tbTelefone.getItems().remove(getindex);
-                    dados.add(new TableViewModel(tfDdd.getText(),
-                            tfTelefone.getText(),
-                            tfOperadora.getText()));
-                }
+        btnAlterar.setOnAction(e -> {
+            iMenssagem.setText("");
+            int getindex = tbTelefone.getSelectionModel().getFocusedIndex();
+            if (getindex == -1) {
+                iMenssagem.setText("Selecione um linha");
+            } else {
+                tbTelefone.getItems().remove(getindex);
+                dados.add(new TableViewModel(tfDdd.getText(),
+                        tfTelefone.getText(),
+                        tfOperadora.getText()));
             }
+
         });
 
-        btnGravar.setOnAction(new EventHandler<ActionEvent>() {
+        btnGravar.setOnAction(e -> {
+            list = new ArrayList<>();
+            Double limite = Double.parseDouble(tfLimite.getText());
+            Integer dependetes = Integer.valueOf(tfDependente.getText());
+            Cliente c = new Cliente(tfNome.getText(), Calendar.getInstance().getTime(), limite, tfCpf.getText(), dependetes);
 
-            @Override
-            public void handle(ActionEvent e) {
-                list = new ArrayList<>();
-                Double limite = Double.parseDouble(tfLimite.getText());
-                Integer dependetes = Integer.valueOf(tfDependente.getText());
-                Cliente c = new Cliente(tfNome.getText(), Calendar.getInstance().getTime(), limite, tfCpf.getText(), dependetes);
+            for (TableViewModel l : dados) {
+                list.add(new ClienteTelefone(l.dddProperty().get(),
+                        l.operadoraProperty().get(), Integer.parseInt(l.telefoneProperty().get()), c));
 
-                for (TableViewModel l : dados) {
-                    list.add(new ClienteTelefone(l.dddProperty().get(),
-                            l.operadoraProperty().get(), Integer.parseInt(l.telefoneProperty().get()), c));
-
-                }
-
-                c.setClienteTelefoneList(list);
-                ICRUD<Cliente> dao = new ClienteDao();
-                dao.create(c);
             }
+
+            c.setClienteTelefoneList(list);
+            ConnectionFactoryJPA.getinstance().getEntityManager().getTransaction().begin();
+            ConnectionFactoryJPA.getinstance().getEntityManager().persist(c);
+            ConnectionFactoryJPA.getinstance().getEntityManager().getTransaction().commit();
         });
 
-        tfDdd.setOnMouseClicked((new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent e) {
-                iMenssagem.setText("");
-            }
+        tfDdd.setOnMouseClicked((e -> {
+            iMenssagem.setText("");
         }));
     }
 
@@ -207,17 +183,7 @@ public class FXMLClienteTelefoneController implements Initializable {
      */
     private boolean unicoTelefone(String ddd, String telefone,
             String operadora) {
-
-        for (TableViewModel dado : dados) {
-            if (ddd.equals(dado.dddProperty().get())) {
-                if (telefone.equals(dado.telefoneProperty().get())) {
-                    if (operadora.equals(dado.operadoraProperty().get())) {
-                        return false;
-                    }
-                }
-            }
-        }
-        return true;
+        return dados.stream().filter((dado) -> (ddd.equals(dado.dddProperty().get()))).filter((dado) -> (telefone.equals(dado.telefoneProperty().get()))).noneMatch((dado) -> (operadora.equals(dado.operadoraProperty().get())));
     }
 
 }
