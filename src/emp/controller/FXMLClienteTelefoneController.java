@@ -130,15 +130,19 @@ public class FXMLClienteTelefoneController implements Initializable {
             }
         });
 
-        tbTelefone.setOnMouseClicked(e -> {
-            tfDdd.setText(tbTelefone.getSelectionModel()
+        tbTelefone.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+                    tfDdd.setText(tbTelefone.getSelectionModel()
                     .getSelectedItem().dddProperty().get());
             tfTelefone.setText(tbTelefone.getSelectionModel()
                     .getSelectedItem().telefoneProperty().get());
             tfOperadora.setText(tbTelefone.getSelectionModel()
                     .getSelectedItem().operadoraProperty().get());
-        });
-
+            }
+        }); 
+    
         btnAlterar.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
