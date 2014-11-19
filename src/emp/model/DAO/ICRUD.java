@@ -17,5 +17,5 @@ public interface ICRUD<T> {
     public long update(T obj);
     public boolean delete(T obj);
     public List<T> retriveAll(T obj);
-    public Object retrivebyId(long  id);
+    public T retrivebyId(long  id);
 }

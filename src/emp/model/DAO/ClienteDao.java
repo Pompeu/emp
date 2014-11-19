@@ -48,9 +48,9 @@ public class ClienteDao implements ICRUD<Cliente> {
         List<Cliente> clientes = null;
         return clientes;
     }
-
+    
     @Override
-    public Object retrivebyId(long id) {
+    public Cliente retrivebyId(long id) {
         Cliente cliente = null;
         return cliente;
     }

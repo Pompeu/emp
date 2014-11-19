@@ -15,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlTransient;
@@ -46,6 +47,8 @@ public class Cliente implements Serializable {
     @Lob
     @Column(name = "foto")
     private byte[] foto;
+    @OneToOne(mappedBy = "fkCliente",cascade = CascadeType.ALL)
+    private ClienteEndereco clienteEndereco;
     @OneToMany(mappedBy = "fkCliente", cascade = CascadeType.ALL)
     private List<ClienteTelefone> clienteTelefoneList;
 
@@ -118,6 +121,14 @@ public class Cliente implements Serializable {
         this.foto = foto;
     }
 
+    public ClienteEndereco getClienteEndereco() {
+        return clienteEndereco;
+    }
+
+    public void setClienteEndereco(ClienteEndereco clienteEndereco) {
+        this.clienteEndereco = clienteEndereco;
+    }
+    
     @XmlTransient
     public List<ClienteTelefone> getClienteTelefoneList() {
         return clienteTelefoneList;

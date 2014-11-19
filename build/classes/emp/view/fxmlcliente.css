@@ -1,7 +1,15 @@
-/*
- * Empty Stylesheet file.
- */
 
-.mainFxmlClass {
+Button{
+    -fx-background-color: #5bc0de;
+    -fx-border-color: #46b8da;
 
 }
+Button:hover{ 
+    -fx-background-color: #31b0d5;
+    -fx-border-color: #269abc;
+}
+
+#AnchorPane {
+    -fx-background-color: steelblue;
+}
+

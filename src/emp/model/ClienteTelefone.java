@@ -101,10 +101,7 @@ public class ClienteTelefone implements Serializable {
             return false;
         }
         ClienteTelefone other = (ClienteTelefone) object;
-        if ((this.pkTelefone == null && other.pkTelefone != null) || (this.pkTelefone != null && !this.pkTelefone.equals(other.pkTelefone))) {
-            return false;
-        }
-        return true;
+        return !((this.pkTelefone == null && other.pkTelefone != null) || (this.pkTelefone != null && !this.pkTelefone.equals(other.pkTelefone)));
     }
 
     @Override

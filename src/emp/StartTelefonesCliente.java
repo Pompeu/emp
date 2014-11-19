@@ -17,24 +17,13 @@ import javafx.stage.Stage;
  */
 public class StartTelefonesCliente extends Application {
 
-   /* public static StartTelefonesCliente INSTANCE = null;
-
-    private StartTelefonesCliente() {
-    }
-
-    public static StartTelefonesCliente getInstace() {
-        if (INSTANCE == null) {
-            INSTANCE = new StartTelefonesCliente();
-        }
-        return INSTANCE;
-    }*/
 
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/emp/view/FXMLClienteTelefone.fxml"));
 
         Scene scene = new Scene(root);
-        stage.setTitle("Telefones");
+        stage.setTitle("Cliente");
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();

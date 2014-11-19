@@ -6,15 +6,14 @@
 package emp.controller;
 
 import emp.model.Cliente;
+import emp.model.ClienteEndereco;
 import emp.model.ClienteTelefone;
 import emp.model.DAO.ClienteDao;
 import emp.model.DAO.ICRUD;
-import emp.model.JPAutil.ConnectionFactoryJPA;
 import emp.model.TableViewModel;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -30,7 +29,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javax.persistence.EntityTransaction;
 
 /**
  *
@@ -85,6 +83,16 @@ public class FXMLClienteTelefoneController implements Initializable {
     private final ObservableList<TableViewModel> dados = FXCollections.observableArrayList();
 
     private List<ClienteTelefone> list;
+    @FXML
+    private TextField tfComplemento;
+    @FXML
+    private TextField tfLogradouro;
+    @FXML
+    private TextField tfCidade;
+    @FXML
+    private TextField tfCep;
+    @FXML
+    private TextField tfEstado;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -110,6 +118,7 @@ public class FXMLClienteTelefoneController implements Initializable {
                         dados.add(new TableViewModel(tfDdd.getText(),
                                 tfTelefone.getText(),
                                 tfOperadora.getText()));
+                        iMenssagem.setText("");
                         limparcampos(true);
                     }
 
@@ -134,15 +143,20 @@ public class FXMLClienteTelefoneController implements Initializable {
 
             @Override
             public void handle(MouseEvent event) {
+                try {
                     tfDdd.setText(tbTelefone.getSelectionModel()
-                    .getSelectedItem().dddProperty().get());
-            tfTelefone.setText(tbTelefone.getSelectionModel()
-                    .getSelectedItem().telefoneProperty().get());
-            tfOperadora.setText(tbTelefone.getSelectionModel()
-                    .getSelectedItem().operadoraProperty().get());
+                            .getSelectedItem().dddProperty().get());
+                    tfTelefone.setText(tbTelefone.getSelectionModel()
+                            .getSelectedItem().telefoneProperty().get());
+                    tfOperadora.setText(tbTelefone.getSelectionModel()
+                            .getSelectedItem().operadoraProperty().get());
+                } catch (Exception e) {
+                    iMenssagem.setText("Tabela Vasia");
+
+                }
             }
-        }); 
-    
+        });
+
         btnAlterar.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
@@ -168,7 +182,9 @@ public class FXMLClienteTelefoneController implements Initializable {
                 Double limite = Double.parseDouble(tfLimite.getText());
                 Integer dependetes = Integer.valueOf(tfDependente.getText());
                 Cliente c = new Cliente(tfNome.getText(), Calendar.getInstance().getTime(), limite, tfCpf.getText(), dependetes);
-
+                ClienteEndereco clienteEndereco = new ClienteEndereco(tfComplemento.getText()
+                        , tfLogradouro.getText(), tfCidade.getText(), tfCep.getText(), tfEstado.getText());
+                c.setClienteEndereco(clienteEndereco);
                 for (TableViewModel l : dados) {
                     list.add(new ClienteTelefone(l.dddProperty().get(),
                             l.operadoraProperty().get(), Integer.parseInt(l.telefoneProperty().get()), c));
@@ -181,13 +197,6 @@ public class FXMLClienteTelefoneController implements Initializable {
             }
         });
 
-        tfDdd.setOnMouseClicked((new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent e) {
-                iMenssagem.setText("");
-            }
-        }));
     }
 
     private void limparcampos(boolean valor) {
